@@ -224,7 +224,7 @@ function dmbase_precent_user_enum( $redirect, $request ) {
 	}
 }
 
-if ( true === DM_PREVENT_USER_ENUM && ! is_admin() ) {
+if ( true === DM_PREVENT_USER_ENUM && ! is_admin() && isset( $_SERVER['QUERY_STRING'] ) ) {
 	if ( preg_match( '/author=([0-9]*)/i', $_SERVER['QUERY_STRING'] ) ) {
 		dmbase_feature_disabled();
 	}
