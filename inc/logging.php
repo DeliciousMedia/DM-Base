@@ -68,7 +68,7 @@ function dm_fatal_error( $message_text, $log_details = '' ) {
 		}
 		dm_log( 'Fatal Error, ErrorID: (' . $error_id . ') Details: ' . $log_details );
 	}
-	wp_die( esc_html( $full_message ), esc_html( 'Error.' ) );
+	wp_die( wp_kses_post( $full_message ), esc_html( 'Error.' ) );
 }
 
 /**
