@@ -66,10 +66,13 @@ add_action( 'init', 'dm_register_utility_tax_with_all_post_types', 99999 );
 /**
  * Create taxonomy terms within the dm_flags taxonomy if they have changed.
  *
- * @param  bool $force      Force re-population.
  * @return bool
  */
-function dm_maybe_populate_flags_taxonomy( $force = false ) {
+function dm_maybe_populate_flags_taxonomy() {
+
+	if ( ( defined( 'DOING_AJAX' ) && DOING_AJAX ) || ( defined( 'WP_INSTALLING' ) && WP_INSTALLING ) ) {
+		return false;
+	}
 
 	// Filter dm_flags_taxonomy_terms to add project specific flags.
 	$terms = apply_filters(
@@ -81,8 +84,10 @@ function dm_maybe_populate_flags_taxonomy( $force = false ) {
 
 	// Check if our array of terms have changed, if so we don't need to update them.
 	$terms_sum = md5( json_encode( $terms ) );
-	$current_sum = get_option( 'dm_flags_checksun' );
-	if ( $terms_sum === $current_sum && false !== $force ) {
+	$current_sum = get_option( 'dm_flags_checksum' );
+	dm_log( [ $terms_sum, $current_sum ] );
+
+	if ( $terms_sum === $current_sum ) {
 		return false;
 	}
 
@@ -130,7 +135,7 @@ function dm_maybe_populate_flags_taxonomy( $force = false ) {
 			}
 		}
 	}
-	update_option( 'dm_flags_checksun', $terms_sum );
+	update_option( 'dm_flags_checksum', $terms_sum );
 	dm_log( 'Updated dm_flags taxonomy terms.' );
 	return true;
 
