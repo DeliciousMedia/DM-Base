@@ -85,7 +85,6 @@ function dm_maybe_populate_flags_taxonomy() {
 	// Check if our array of terms have changed, if so we don't need to update them.
 	$terms_sum = md5( json_encode( $terms ) );
 	$current_sum = get_option( 'dm_flags_checksum' );
-	dm_log( [ $terms_sum, $current_sum ] );
 
 	if ( $terms_sum === $current_sum ) {
 		return false;
