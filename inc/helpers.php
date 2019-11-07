@@ -53,3 +53,15 @@ if ( ! function_exists( 'dm_does_user_exist' ) ) {
 function get_dm_user() {
 	return get_user_by( 'login', 'deliciousmedia' );
 }
+
+
+/**
+ * Helper, does a post id exist?
+ *
+ * @param  id $post_id Post ID to check.
+ *
+ * @return bool
+ */
+function dm_post_id_exists( $post_id ) {
+	return is_string( get_post_status( $post_id ) );
+}

@@ -131,7 +131,7 @@ function dmbase_remove_comment_menu() {
  */
 function dmbase_remove_comments_adminbar() {
 	global $wp_admin_bar;
-	$wp_admin_bar->remove_menu( 'comments' );
+	$wp_admin_bar->remove_node( 'comments' );
 }
 
 if ( defined( 'DM_DISABLE_COMMENTS' ) && DM_DISABLE_COMMENTS ) {
