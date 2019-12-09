@@ -186,6 +186,9 @@ function dm_set_flag( $post_id, $flag_type, $flag_value ) {
 	// Set the new term for the object.
 	wp_set_object_terms( $post_id, $flag_value, 'dm_flags', true );
 	do_action( 'dm_flag_set', $post_id, $flag_type, $flag_value );
+		do_action( 'dm_flag_set', $post_id, $flag_type, $flag_value );
+	do_action( 'dm_flag_set_' . $flag_type, $post_id, $flag_value );
+		do_action( 'dm_flag_set_' . $flag_type, $post_id, $flag_value );
 	return true;
 
 }
@@ -207,7 +210,7 @@ function dm_get_flag( $post_id, $flag_type ) {
 	$type_term = get_term_by( 'slug', $flag_type, 'dm_flags', ARRAY_A );
 	$parent_term_id = $type_term['term_id'];
 
-	$flags = wp_get_object_terms( $post_id, 'dm_flags' );
+	$flags = get_the_terms( $post_id, 'dm_flags' );
 	foreach ( $flags as $this_flag ) {
 		if ( $this_flag->parent === $parent_term_id ) {
 			$terms[] = $this_flag->slug;
@@ -248,6 +251,7 @@ function dm_remove_flag( $post_id, $flag_type, $flag_value ) {
 
 	return wp_remove_object_terms( $post_id, $flag_value, 'dm_flags' );
 	do_action( 'dm_flag_removed', $post_id, $flag_type, $flag_value );
+	do_action( 'dm_flag_removed_' . $flag_type, $post_id, $flag_value );
 }
 
 /**
@@ -317,11 +321,14 @@ function dm_get_all_flags_by_type( $type, $slugs_only = false ) {
  * @return string
  */
 function dm_flags_maybe_prevent_term_deletion( $required_cap, $cap, $user_id, $args ) {
-	if ( 'delete_term' === $cap || 'edit_term' === $cap ) {
-		if ( get_term_meta( $args[0], 'protected', false ) ) {
-			$required_cap[] = 'do_not_allow';
-		}
+	if ( 'delete_term' !== $cap || 'edit_term' !== $cap ) {
+		return $required_cap;
 	}
+
+	if ( get_term_meta( $args[0], 'protected', false ) ) {
+		$required_cap[] = 'do_not_allow';
+	}
+
 	return $required_cap;
 }
 add_filter( 'map_meta_cap', 'dm_flags_maybe_prevent_term_deletion', 10, 4 );
