@@ -186,9 +186,7 @@ function dm_set_flag( $post_id, $flag_type, $flag_value ) {
 	// Set the new term for the object.
 	wp_set_object_terms( $post_id, $flag_value, 'dm_flags', true );
 	do_action( 'dm_flag_set', $post_id, $flag_type, $flag_value );
-		do_action( 'dm_flag_set', $post_id, $flag_type, $flag_value );
 	do_action( 'dm_flag_set_' . $flag_type, $post_id, $flag_value );
-		do_action( 'dm_flag_set_' . $flag_type, $post_id, $flag_value );
 	return true;
 
 }
