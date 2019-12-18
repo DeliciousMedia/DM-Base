@@ -3,7 +3,7 @@
  * Plugin Name: DM Base
  * Plugin URI: https://github.com/DeliciousMedia/DM-Base
  * Description: Base functionality, helpers and modifications to WordPress for Delicious Media projects.
- * Version: 1.2.4
+ * Version: 1.2.5
  * Author: Delicious Media Limited
  * Author URI: https://www.deliciousmedia.co.uk/
  * Text Domain: dm-base
@@ -30,7 +30,7 @@ defined( 'DM_EI' ) || define( 'DM_EI', true );
 defined( 'DM_PREVENT_USER_ENUM' ) || define( 'DM_PREVENT_USER_ENUM', true );
 defined( 'DM_ACF_SYNC' ) || define( 'DM_ACF_SYNC', true );
 defined( 'DM_FLAGS_TAX' ) || define( 'DM_FLAGS_TAX', true );
-
+defined( 'DM_REMOVE_YOAST_ADS' ) || define( 'DM_REMOVE_YOAST_ADS', true );
 
 require_once( dirname( __FILE__ ) . '/inc/helpers.php' );
 require_once( dirname( __FILE__ ) . '/inc/logging.php' );
