@@ -209,6 +209,12 @@ function dm_get_flag( $post_id, $flag_type ) {
 	$parent_term_id = $type_term['term_id'];
 
 	$flags = get_the_terms( $post_id, 'dm_flags' );
+
+	// No flags set.
+	if ( empty( $flags ) ) {
+		return [];
+	}
+
 	foreach ( $flags as $this_flag ) {
 		if ( $this_flag->parent === $parent_term_id ) {
 			$terms[] = $this_flag->slug;
