@@ -16,7 +16,7 @@
 function dmbase_deny_unauthenticated_rest_api_access( $access ) {
 	if ( ! is_user_logged_in() ) {
 
-		$allowed_namespaces = apply_filters( 'dm_allowed_anonymous_restnamespaces', [] );
+		$allowed_namespaces = apply_filters( 'dm_allowed_anonymous_restnamespaces', [ 'oembed' ] );
 
 		// If we've got any allowed namespaces then permit access to them.
 		if ( ! empty( $allowed_namespaces ) ) {
