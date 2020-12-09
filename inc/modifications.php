@@ -47,7 +47,7 @@ function dmbase_deny_unauthenticated_rest_api_access( $access ) {
 	}
 	return $access;
 }
-if ( defined( 'DM_DISABLE_REST_ANON' ) && DM_DISABLE_REST_ANON ) {
+if ( defined( 'DM_DISABLE_REST_ANON' ) && true === DM_DISABLE_REST_ANON ) {
 	add_filter( 'rest_authentication_errors', 'dmbase_deny_unauthenticated_rest_api_access', 10 );
 }
 
@@ -64,7 +64,7 @@ function dmbase_feature_disabled() {
 /**
  * Disable RSS feeds.
  */
-if ( defined( 'DM_DISABLE_RSS' ) && DM_DISABLE_RSS ) {
+if ( defined( 'DM_DISABLE_RSS' ) && true === DM_DISABLE_RSS ) {
 	add_action( 'do_feed', 'dmbase_feature_disabled', 1 );
 	add_action( 'do_feed_rdf', 'dmbase_feature_disabled', 1 );
 	add_action( 'do_feed_rss', 'dmbase_feature_disabled', 1 );
@@ -99,7 +99,7 @@ function dmbase_disable_search( $query, $error = true ) {
 		}
 	}
 }
-if ( defined( 'DM_DISABLE_SEARCH' ) && DM_DISABLE_SEARCH ) {
+if ( defined( 'DM_DISABLE_SEARCH' ) && true === DM_DISABLE_SEARCH ) {
 	add_action( 'parse_query', 'dmbase_disable_search' );
 }
 
@@ -134,7 +134,7 @@ function dmbase_remove_comments_adminbar() {
 	$wp_admin_bar->remove_node( 'comments' );
 }
 
-if ( defined( 'DM_DISABLE_COMMENTS' ) && DM_DISABLE_COMMENTS ) {
+if ( defined( 'DM_DISABLE_COMMENTS' ) && true === DM_DISABLE_COMMENTS ) {
 	add_action( 'init', 'dmbase_remove_comment_support', 900 );
 	add_action( 'admin_menu', 'dmbase_remove_comment_menu' );
 	add_action( 'wp_before_admin_bar_render', 'dmbase_remove_comments_adminbar' );
@@ -202,10 +202,9 @@ function dmbase_remove_emojis() {
 	add_filter( 'tiny_mce_plugins', 'dmbase_remove_emojis_from_tinymce' );
 }
 
-if ( defined( 'DM_DISABLE_EMOJIS' ) && DM_DISABLE_EMOJIS ) {
+if ( defined( 'DM_DISABLE_EMOJIS' ) && true === DM_DISABLE_EMOJIS ) {
 	add_action( 'init', 'dmbase_remove_emojis' );
 }
-
 
 /**
  * Prevent ?username=123 redirects which allow for username enumeration.
