@@ -70,8 +70,14 @@ if ( defined( 'DM_GFORM_DELETE' ) && DM_GFORM_DELETE ) {
 add_filter( 'woocommerce_allow_marketplace_suggestions', '__return_false' );
 
 /**
- * Hide ACF from admin area unless we're in a dev environment.
+ * Hide ACF from admin area unless we have the dm_developer role.
  */
-if ( true !== dm_is_dev() ) {
-	add_filter( 'acf/settings/show_admin', '__return_false' );
+if ( defined( 'DM_HIDE_ACF_UI' ) && DM_HIDE_ACF_UI ) {
+	add_filter(
+		'acf/settings/show_admin',
+		function() {
+			return dm_is_developer();
+		}
+	);
 }
+

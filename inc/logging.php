@@ -61,6 +61,8 @@ function dm_fatal_error( $message_text, $log_details = '' ) {
 
 	$full_message = sprintf( apply_filters( 'dm_fatal_error.message_template', $full_message ), $message_text, $error_id );
 
+	do_action( 'dm_fatal_error.triggered', $error_id, $message_text, $log_details );
+
 	dm_log( 'Fatal Error, ErrorID: (' . $error_id . ') Message: ' . $message_text );
 	if ( ! empty( $log_details ) ) {
 		if ( is_array( $log_details ) || is_object( $log_details ) ) {
