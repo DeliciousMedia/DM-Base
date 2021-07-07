@@ -3,7 +3,7 @@
  * Plugin Name: DM Base
  * Plugin URI: https://github.com/DeliciousMedia/DM-Base
  * Description: Base functionality, helpers and modifications to WordPress for Delicious Media projects.
- * Version: 1.2.7
+ * Version: 1.2.8
  * Author: Delicious Media Limited
  * Author URI: https://www.deliciousmedia.co.uk/
  * Text Domain: dm-base
@@ -31,10 +31,12 @@ defined( 'DM_PREVENT_USER_ENUM' ) || define( 'DM_PREVENT_USER_ENUM', true );
 defined( 'DM_ACF_SYNC' ) || define( 'DM_ACF_SYNC', true );
 defined( 'DM_FLAGS_TAX' ) || define( 'DM_FLAGS_TAX', true );
 defined( 'DM_REMOVE_YOAST_ADS' ) || define( 'DM_REMOVE_YOAST_ADS', true );
+defined( 'DM_HIDE_ACF_UI' ) || define( 'DM_HIDE_ACF_UI', true );
 
 require_once( dirname( __FILE__ ) . '/inc/helpers.php' );
 require_once( dirname( __FILE__ ) . '/inc/logging.php' );
 require_once( dirname( __FILE__ ) . '/inc/setup.php' );
+require_once( dirname( __FILE__ ) . '/inc/third-party.php' );
 
 if ( ! defined( 'DM_ENVIRONMENT' ) ) {
 	new DM_AdminNotice( 'Warning: the DM_ENVIRONMENT constant was not set, defaulting to LIVE. You should set this in your local-config.php', 'warning', false );
