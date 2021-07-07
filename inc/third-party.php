@@ -76,11 +76,7 @@ if ( defined( 'DM_HIDE_ACF_UI' ) && DM_HIDE_ACF_UI ) {
 	add_filter(
 		'acf/settings/show_admin',
 		function() {
-			$current_user = wp_get_current_user();
-			if ( in_array( 'dm_developer', (array) $current_user->roles ) ) {
-				return true;
-			}
-			return false;
+			return dm_is_developer();
 		}
 	);
 }
