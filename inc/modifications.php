@@ -87,7 +87,7 @@ if ( defined( 'DM_DISABLE_RSS' ) && true === DM_DISABLE_RSS ) {
 function dmbase_disable_search( $query, $error = true ) {
 
 	if ( is_admin() ) {
-		return $query;
+		return;
 	}
 
 	if ( is_search() ) {
