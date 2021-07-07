@@ -70,9 +70,9 @@ function dmbase_ll_display_column_data( $value, $column_name, $user_id ) {
 	if ( 'dm_last_login' == $column_name ) {
 		$login_details = dmbase_ll_get_login_times( $user_id );
 		if ( $login_details['last'] ) {
-			$content = __( 'Last: ' ) . esc_html( date( 'd/m/Y H:m:s', absint( $login_details['last'] ) ) ); }
+			$content = __( 'Last: ' ) . esc_html( gmdate( 'd/m/Y H:m:s', absint( $login_details['last'] ) ) ); }
 		if ( $login_details['previous'] ) {
-			$content .= '<br/>' . __( 'Prev: ' ) . esc_html( date( 'd/m/Y H:m:s', absint( $login_details['previous'] ) ) ); }
+			$content .= '<br/>' . __( 'Prev: ' ) . esc_html( gmdate( 'd/m/Y H:m:s', absint( $login_details['previous'] ) ) ); }
 		if ( ! isset( $content ) ) {
 			$content = __( 'No logins recorded.' );
 		}

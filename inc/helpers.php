@@ -19,6 +19,19 @@ if ( ! function_exists( 'dm_is_dev' ) ) {
 	}
 }
 
+/**
+ * Does the current user have the dm_developer role?
+ *
+ * @return bool
+ */
+function dm_is_developer() {
+	$current_user = wp_get_current_user();
+	if ( in_array( 'dm_developer', (array) $current_user->roles ) ) {
+		return true;
+	}
+	return false;
+}
+
 if ( ! function_exists( 'dm_is_blog_page' ) ) {
 	/**
 	 * Are we on a blog page?
