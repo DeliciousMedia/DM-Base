@@ -6,7 +6,7 @@
  */
 
 // By default we store the field data in our theme folder.
-defined( 'DMACFS_DATA_DIR' ) || define( 'DMACFS_DATA_DIR', get_stylesheet_directory() . '/acf-field-data' );
+defined( 'DMACFS_DATA_DIR' ) || define( 'DMACFS_DATA_DIR', get_template_directory() . '/acf-field-data' );
 
 /**
  * Create our directory if needed.
@@ -40,6 +40,13 @@ add_filter( 'acf/settings/save_json', 'dmacfs_json_save_point' );
 function dmacfs_json_load_point( $paths ) {
 	unset( $paths[0] );
 	$paths[] = DMACFS_DATA_DIR;
+
+	// If this is a child theme, add the child theme path
+	// as well as the parent theme path.
+	if ( is_child_theme() ) {
+		$paths[] = get_stylesheet_directory() . '/acf-field-data';
+	}
+
 	return $paths;
 
 }
@@ -62,9 +69,16 @@ function dmacfs_remove_old_fields() {
 	foreach ( $groups as $group ) {
 		$found = false;
 
-			$json_file = rtrim( DMACFS_DATA_DIR, '/' ) . '/' . $group['key'] . '.json';
+		$json_file = rtrim( DMACFS_DATA_DIR, '/' ) . '/' . $group['key'] . '.json';
+		$json_file_child = '';
 
-		if ( is_file( $json_file ) ) {
+		// If this is a child theme, check for file in
+		// the child theme path as well as the parent theme path.
+		if ( is_child_theme() ) {
+			$json_file_child = rtrim( get_stylesheet_directory() . '/acf-field-data', '/' ) . '/' . $group['key'] . '.json';
+		}
+
+		if ( is_file( $json_file ) || is_file( $json_file_child ) ) {
 			$found = true;
 
 			break;
