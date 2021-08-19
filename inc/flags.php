@@ -249,7 +249,7 @@ function dm_remove_flag( $post_id, $flag_type, $flag_value ) {
 		return new WP_Error( 'dm_set_flag:non-existent post id', $post_id );
 	}
 
-	if ( dm_has_flag( $post_id, $flag_type, $flag_value ) ) {
+	if ( ! dm_has_flag( $post_id, $flag_type, $flag_value ) ) {
 		return false;
 	}
 
