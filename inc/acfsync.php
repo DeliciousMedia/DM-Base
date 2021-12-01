@@ -5,6 +5,7 @@
  * @package dm-base
  */
 
+
 // By default we store the field data in our theme folder.
 defined( 'DMACFS_DATA_DIR' ) || define( 'DMACFS_DATA_DIR', get_template_directory() . '/acf-field-data' );
 
@@ -17,6 +18,21 @@ function dmbase_acfsync_directory_setup() {
 	}
 }
 add_action( 'dmbase_setup', 'dmbase_acfsync_directory_setup' );
+
+// Should exist in DM projects.
+if ( ! function_exists( 'dm_is_dev' ) ) {
+	/**
+	 * Are we running under a Delicious Media development environment?
+	 *
+	 * @return bool
+	 */
+	function dm_is_dev() {
+		if ( defined( 'DM_ENVIRONMENT' ) && 'DEV' == DM_ENVIRONMENT ) {
+			return true;
+		}
+		return false;
+	}
+}
 
 /**
  * Set the path for ACF field groups and settings to be saved in.
@@ -145,7 +161,7 @@ function dmacfs_add_update_fields() {
  *
  * @return bool
  */
-function dmacfs_maybe_update_acf_fields() {
+function dmacfs_trigger_update() {
 
 	if ( ( defined( 'DOING_AJAX' ) && DOING_AJAX ) || ( defined( 'WP_INSTALLING' ) && WP_INSTALLING ) || dm_is_dev() ) {
 		return false;
@@ -155,18 +171,54 @@ function dmacfs_maybe_update_acf_fields() {
 		return false;
 	}
 
-	if ( ! defined( 'DMACFS_DATA_VERSION' ) ) {
-		return;
+	// Allow auto-updates to be disabled.
+	if ( defined( 'DMACFS_SKIP_AUTOMATIC_UPDATES' ) && true === DMACFS_SKIP_AUTOMATIC_UPDATES ) {
+		return false;
 	}
 
+	if ( ! defined( 'DMACFS_DATA_VERSION' ) ) {
+		return false;
+	}
+
+	return dmacfs_maybe_update_acf_fields();
+
+}
+add_action( 'acf/init', 'dmacfs_trigger_update' );
+
+
+/**
+ * Update the ACF fields if the version string in the DB differs from the DMACFS_DATA_VERSION constant.
+ *
+ * @return bool
+ */
+function dmacfs_maybe_update_acf_fields() {
 	$acf_field_version = intval( get_option( 'dmacfs_active_version', 'not_setup' ) );
+
+	if ( ! defined( 'DMACFS_DATA_VERSION' ) ) {
+		return false;
+	}
 
 	if ( DMACFS_DATA_VERSION !== $acf_field_version ) {
 		dmacfs_remove_old_fields();
 		dmacfs_add_update_fields();
 		update_option( 'dmacfs_active_version', (int) DMACFS_DATA_VERSION );
+		return true;
 	}
-
-	return true;
+	return false;
 }
-add_action( 'acf/init', 'dmacfs_maybe_update_acf_fields' );
+
+/**
+ * Updates the ACF fields in the database from the JSON files, if an update is required.
+ */
+function dmacfs_update_acf_fields_command() {
+	$result = dmacfs_maybe_update_acf_fields();
+	if ( true === $result ) {
+		WP_CLI::success( 'ACF fields updated' );
+	} else {
+		WP_CLI::success( 'ACF fields not updated, DMACFS_DATA_VERSION is not set or already constant matches version in database.' );
+	}
+}
+WP_CLI::add_command( 'dm acfsync', 'dmacfs_update_acf_fields_command' );
+
+
+
