@@ -207,6 +207,7 @@ function dmacfs_maybe_update_acf_fields() {
 	return false;
 }
 
+
 /**
  * Updates the ACF fields in the database from the JSON files, if an update is required.
  */
@@ -218,7 +219,6 @@ function dmacfs_update_acf_fields_command() {
 		WP_CLI::success( 'ACF fields not updated, DMACFS_DATA_VERSION is not set or already constant matches version in database.' );
 	}
 }
-WP_CLI::add_command( 'dm acfsync', 'dmacfs_update_acf_fields_command' );
-
-
-
+if ( class_exists( 'WP_CLI' ) ) {
+	WP_CLI::add_command( 'dm acfsync', 'dmacfs_update_acf_fields_command' );
+}
