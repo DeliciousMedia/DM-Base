@@ -7,7 +7,6 @@
  * @package dm-base
  */
 
-
 class DM_Base_Disable_Plugins {
 	protected $plugins = [];
 	protected $message = 'Disabled in this environment';
