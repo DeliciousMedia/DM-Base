@@ -19,21 +19,6 @@ function dmbase_acfsync_directory_setup() {
 }
 add_action( 'dmbase_setup', 'dmbase_acfsync_directory_setup' );
 
-// Should exist in DM projects.
-if ( ! function_exists( 'dm_is_dev' ) ) {
-	/**
-	 * Are we running under a Delicious Media development environment?
-	 *
-	 * @return bool
-	 */
-	function dm_is_dev() {
-		if ( defined( 'DM_ENVIRONMENT' ) && 'DEV' == DM_ENVIRONMENT ) {
-			return true;
-		}
-		return false;
-	}
-}
-
 /**
  * Set the path for ACF field groups and settings to be saved in.
  *
@@ -163,7 +148,7 @@ function dmacfs_add_update_fields() {
  */
 function dmacfs_trigger_update() {
 
-	if ( ( defined( 'DOING_AJAX' ) && DOING_AJAX ) || ( defined( 'WP_INSTALLING' ) && WP_INSTALLING ) || dm_is_dev() ) {
+	if ( ( defined( 'DOING_AJAX' ) && true === DOING_AJAX ) || ( defined( 'WP_INSTALLING' ) && true === WP_INSTALLING ) || dm_is_dev() ) {
 		return false;
 	}
 

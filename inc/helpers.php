@@ -12,7 +12,7 @@ if ( ! function_exists( 'dm_is_dev' ) ) {
 	 * @return bool
 	 */
 	function dm_is_dev() {
-		if ( defined( 'DM_ENVIRONMENT' ) && 'DEV' == DM_ENVIRONMENT ) {
+		if ( defined( 'DM_ENVIRONMENT' ) && 'DEV' === DM_ENVIRONMENT ) {
 			return true;
 		}
 		return false;

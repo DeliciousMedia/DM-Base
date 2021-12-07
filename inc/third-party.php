@@ -21,7 +21,7 @@ add_filter(
 /**
  * Remove aggressive advertising inserted into wp-admin by Yoast plugin when deleting posts or terms.
  */
-if ( defined( 'DM_REMOVE_YOAST_ADS' ) && DM_REMOVE_YOAST_ADS ) {
+if ( defined( 'DM_REMOVE_YOAST_ADS' ) && true === DM_REMOVE_YOAST_ADS ) {
 
 	// Don't need to remove this is the "Premium" version is installed.
 	if ( class_exists( 'WPSEO_Utils' ) && WPSEO_Utils::is_yoast_seo_premium() ) {
@@ -51,7 +51,7 @@ if ( defined( 'DM_REMOVE_YOAST_ADS' ) && DM_REMOVE_YOAST_ADS ) {
 /**
  * Delete GravityForms entries upon submission to avoid retaining data we don't need.
  */
-if ( defined( 'DM_GFORM_DELETE' ) && DM_GFORM_DELETE ) {
+if ( defined( 'DM_GFORM_DELETE' ) && true === DM_GFORM_DELETE ) {
 	add_action(
 		'gform_after_submission',
 		function( $entry, $form ) {
@@ -70,9 +70,16 @@ if ( defined( 'DM_GFORM_DELETE' ) && DM_GFORM_DELETE ) {
 add_filter( 'woocommerce_allow_marketplace_suggestions', '__return_false' );
 
 /**
- * Hide ACF from admin area unless we have the dm_developer role.
+ * Hide ACF UI on non-development environments unless we have the dm_developer role.
  */
-if ( defined( 'DM_HIDE_ACF_UI' ) && DM_HIDE_ACF_UI ) {
+if ( defined( 'DM_HIDE_ACF_UI' ) && true === DM_HIDE_ACF_UI ) {
+
+	// Always show on development environments.
+	if ( dm_is_dev() ) {
+		return true;
+	}
+
+	// On other environments, only show for users with the dm_developer role.
 	add_filter(
 		'acf/settings/show_admin',
 		function() {
@@ -80,4 +87,3 @@ if ( defined( 'DM_HIDE_ACF_UI' ) && DM_HIDE_ACF_UI ) {
 		}
 	);
 }
-
