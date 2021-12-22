@@ -13,11 +13,14 @@
  * @param  mixed  $message        message text, accepts string, array or object.
  * @param  string $category       category of log entry; determines which file is written to.
  */
+
 function dm_log( $message, $category = 'general' ) {
 
 	$timestamp = new DateTime();
 
 	$elements['timestamp']   = $timestamp->format( 'd/m/y H:i:s' );
+	$request_id_parts = [ $_SERVER['REMOTE_ADDR'] ?? '', $_SERVER['REQUEST_TIME_FLOAT'] ?? '', $_SERVER['REMOTE_PORT'] ?? '' ];
+	$elements['request_id'] = hash( 'crc32b', implode( '-', $request_id_parts ) );
 	$elements['remote_addr'] = sanitize_text_field( $_SERVER['REMOTE_ADDR'] );
 
 	if ( is_multisite() ) {
@@ -25,13 +28,16 @@ function dm_log( $message, $category = 'general' ) {
 	}
 	$elements['user_id'] = get_current_user_id();
 
+	$message = apply_filters( 'dm_log.message', $message );
+	do_action( 'dm_log.item_logged', $category, $elements, $message );
+
 	if ( is_array( $message ) || is_object( $message ) ) {
 		$elements['message'] = print_r( $message, true );
 	} else {
 		$elements['message'] = sanitize_text_field( $message );
 	}
 
-	apply_filters( 'dm_log.elements', $elements );
+	$elements = apply_filters( 'dm_log.elements', $elements );
 
 	$file_name = sanitize_file_name( 'app_' . $category . '.log' );
 
