@@ -28,13 +28,16 @@ function dm_log( $message, $category = 'general' ) {
 	}
 	$elements['user_id'] = get_current_user_id();
 
+	$message = apply_filters( 'dm_log.message', $message );
+	do_action( 'dm_log.item_logged', $category, $elements, $message );
+
 	if ( is_array( $message ) || is_object( $message ) ) {
 		$elements['message'] = print_r( $message, true );
 	} else {
 		$elements['message'] = sanitize_text_field( $message );
 	}
 
-	apply_filters( 'dm_log.elements', $elements );
+	$elements = apply_filters( 'dm_log.elements', $elements );
 
 	$file_name = sanitize_file_name( 'app_' . $category . '.log' );
 
