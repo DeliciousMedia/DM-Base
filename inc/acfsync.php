@@ -5,9 +5,16 @@
  * @package dm-base
  */
 
+// If we're on a site where we only have control of the child theme,
+// use that rather than the parent as the default location.
+if ( defined( 'DMACFS_CHILD_ONLY' ) && true === DMACFS_CHILD_ONLY ) {
+	$dmacfs_theme_dir = get_stylesheet_directory();
+} else {
+	$dmacfs_theme_dir = get_template_directory();
+}
 
 // By default we store the field data in our theme folder.
-defined( 'DMACFS_DATA_DIR' ) || define( 'DMACFS_DATA_DIR', get_template_directory() . '/acf-field-data' );
+defined( 'DMACFS_DATA_DIR' ) || define( 'DMACFS_DATA_DIR', $dmacfs_theme_dir . '/acf-field-data' );
 
 /**
  * Create our directory if needed.
@@ -42,8 +49,13 @@ function dmacfs_json_load_point( $paths ) {
 	unset( $paths[0] );
 	$paths[] = DMACFS_DATA_DIR;
 
-	// If this is a child theme, add the child theme path
-	// as well as the parent theme path.
+	// If we're on a site where we only control the child theme, return now.
+	if ( defined( 'DMACFS_CHILD_ONLY' ) && true === DMACFS_CHILD_ONLY ) {
+		return $paths;
+	}
+
+	// If this is a child theme (and we control the parent),
+	// add the child theme path as well as the parent theme path.
 	if ( is_child_theme() ) {
 		$paths[] = get_stylesheet_directory() . '/acf-field-data';
 	}

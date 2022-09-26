@@ -16,6 +16,11 @@ defined( 'DM_ENVIRONMENT' ) || define( 'DM_ENVIRONMENT', 'UNKNOWN' );
  */
 function dmbase_ei_add_adminbar_node( $wp_admin_bar ) {
 
+	// Filter to allow conditional display.
+	if ( false === apply_filters( 'dmbase_ei_show_indicator', true ) ) {
+		return;
+	}
+
 	$message = apply_filters( 'dmbase_ei_environment_message', strtoupper( DM_ENVIRONMENT ) );
 
 	$wp_admin_bar->add_node(
@@ -39,6 +44,11 @@ add_action( 'admin_bar_menu', 'dmbase_ei_add_adminbar_node', 1 );
 function dmbase_ei_insert_css() {
 
 	if ( ! is_user_logged_in() ) {
+		return;
+	}
+
+	// Filter to allow conditional display.
+	if ( false === apply_filters( 'dmbase_ei_show_indicator', true ) ) {
 		return;
 	}
 
