@@ -57,6 +57,18 @@ function dmbase_ll_add_admin_column( $columns ) {
 add_filter( 'manage_users_columns', 'dmbase_ll_add_admin_column' );
 
 /**
+ * Make our last login column sortable.
+ *
+ * @param  array $columns Sortable columns.
+ * @return array
+ */
+function dmbase_ll_make_login_times_sortable( $columns ) {
+	$columns['dm_last_login'] = 'dm_last_login';
+	return $columns;
+}
+add_filter( 'manage_users_sortable_columns', 'dmbase_ll_make_login_times_sortable' );
+
+/**
  * Populate our user meta column.
  *
  * @param  string $value       Existing column content.

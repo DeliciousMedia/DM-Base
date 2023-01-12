@@ -3,7 +3,7 @@
  * Plugin Name: DM Base
  * Plugin URI: https://github.com/DeliciousMedia/DM-Base
  * Description: Base functionality, helpers and modifications to WordPress for Delicious Media projects.
- * Version: 1.2.16
+ * Version: 1.2.17
  * Author: Delicious Media Limited
  * Author URI: https://www.deliciousmedia.co.uk/
  * Text Domain: dm-base
@@ -33,31 +33,31 @@ defined( 'DM_FLAGS_TAX' ) || define( 'DM_FLAGS_TAX', true );
 defined( 'DM_REMOVE_YOAST_ADS' ) || define( 'DM_REMOVE_YOAST_ADS', true );
 defined( 'DM_HIDE_ACF_UI' ) || define( 'DM_HIDE_ACF_UI', true );
 
-require_once( dirname( __FILE__ ) . '/inc/helpers.php' );
-require_once( dirname( __FILE__ ) . '/inc/logging.php' );
-require_once( dirname( __FILE__ ) . '/inc/setup.php' );
-require_once( dirname( __FILE__ ) . '/inc/third-party.php' );
+require_once dirname( __FILE__ ) . '/inc/helpers.php';
+require_once dirname( __FILE__ ) . '/inc/logging.php';
+require_once dirname( __FILE__ ) . '/inc/setup.php';
+require_once dirname( __FILE__ ) . '/inc/third-party.php';
 
 if ( ! defined( 'DM_ENVIRONMENT' ) ) {
 	new DM_AdminNotice( 'Warning: the DM_ENVIRONMENT constant was not set, defaulting to LIVE. You should set this in your local-config.php', 'warning', false );
 	define( 'DM_ENVIRONMENT', 'LIVE' );
 }
 
-require_once( dirname( __FILE__ ) . '/inc/modifications.php' );
-require_once( dirname( __FILE__ ) . '/inc/plugin-control.php' );
+require_once dirname( __FILE__ ) . '/inc/modifications.php';
+require_once dirname( __FILE__ ) . '/inc/plugin-control.php';
 
 if ( true === DM_LASTLOGIN ) {
-	require_once( dirname( __FILE__ ) . '/inc/last-login.php' );
+	require_once dirname( __FILE__ ) . '/inc/last-login.php';
 }
 
 if ( true === DM_EI ) {
-	require_once( dirname( __FILE__ ) . '/inc/ei.php' );
+	require_once dirname( __FILE__ ) . '/inc/ei.php';
 }
 
 if ( true === DM_ACF_SYNC ) {
-	require_once( dirname( __FILE__ ) . '/inc/acfsync.php' );
+	require_once dirname( __FILE__ ) . '/inc/acfsync.php';
 }
 
 if ( true === DM_FLAGS_TAX ) {
-	require_once( dirname( __FILE__ ) . '/inc/flags.php' );
+	require_once dirname( __FILE__ ) . '/inc/flags.php';
 }
