@@ -28,6 +28,8 @@ function dmbase_do_setup() {
 
 /**
  * Setup the dm_developer role, and add our user.
+ *
+ * @return void
  */
 function dmbase_setup_developer_role() {
 
@@ -48,3 +50,28 @@ function dmbase_setup_developer_role() {
 
 }
 add_action( 'dmbase_setup', 'dmbase_setup_developer_role', 10 );
+
+/**
+ * If the SpinupWP plugin is active, it is likely it will have been activated by DM_Base_Enable_Plugins
+ * and the activation hook won't have run; so we'll run it here.
+ *
+ * @return bool
+ */
+function dmbase_maybe_run_spinupwp_install() {
+	// Check if the plugin is active.
+	if ( ! is_plugin_active( 'spinupwp/spinupwp.php' ) ) {
+		return false;
+	}
+
+	// Check if we are on a SpinupWP environment.
+	if ( getenv( 'SPINUPWP_SITE' ) ) {
+		return false;
+	}
+
+	dm_log( 'dmbase_maybe_run_spinupwp_install: running SpinupWP setup.' );
+	$spinupwp = new SpinupWp\Plugin( 'dm-base' );
+	$spinupwp->install();
+	return true;
+}
+
+add_action( 'dmbase_setup', 'dmbase_maybe_run_spinupwp_install', 20 );

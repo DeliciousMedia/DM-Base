@@ -20,7 +20,7 @@ add_filter(
 
 /**
  * Remove aggressive advertising inserted into wp-admin by Yoast plugin when deleting posts or terms.
- */
+  */
 if ( defined( 'DM_REMOVE_YOAST_ADS' ) && true === DM_REMOVE_YOAST_ADS ) {
 
 	// Don't need to remove this is the "Premium" version is installed.
@@ -87,3 +87,15 @@ if ( defined( 'DM_HIDE_ACF_UI' ) && true === DM_HIDE_ACF_UI ) {
 		}
 	);
 }
+
+// Don't show SpinupWP notices; we already pickup these things up and they will confuse clients.
+add_action(
+	'init',
+	function() {
+		dm_remove_filters_for_anonymous_class( 'admin_notices', 'SpinupWp\AdminNotices', 'show_notices', 10 );
+		dm_remove_filters_for_anonymous_class( 'network_admin_notices', 'SpinupWp\AdminNotices', 'show_notices', 10 );
+		dm_remove_filters_for_anonymous_class( 'admin_enqueue_scripts', 'SpinupWp\AdminNotices', 'enqueue_scripts', 10 );
+		dm_remove_filters_for_anonymous_class( 'wp_ajax_spinupwp_dismiss_notice', 'SpinupWp\AdminNotices', 'ajax_dismiss_notice', 10 );
+	}
+);
+

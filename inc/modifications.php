@@ -229,4 +229,3 @@ if ( true === DM_PREVENT_USER_ENUM && ! is_admin() && isset( $_SERVER['QUERY_STR
 	}
 	add_filter( 'redirect_canonical', 'dmbase_precent_user_enum', 10, 2 );
 }
-
