@@ -3,7 +3,7 @@
  * Plugin Name: DM Base
  * Plugin URI: https://github.com/DeliciousMedia/DM-Base
  * Description: Base functionality, helpers and modifications to WordPress for Delicious Media projects.
- * Version: 1.2.18
+ * Version: 1.3.0
  * Author: Delicious Media Limited
  * Author URI: https://www.deliciousmedia.co.uk/
  * Text Domain: dm-base
@@ -12,7 +12,7 @@
  * @package dm-base
  **/
 
-define( 'DMBASE_SETUP_VERSION', 2 );
+define( 'DMBASE_SETUP_VERSION', 3 );
 
 /**
  * Set our default settings.
