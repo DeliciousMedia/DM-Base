@@ -10,7 +10,7 @@
  */
 function dmbase_maybe_trigger_setup() {
 	if ( DMBASE_SETUP_VERSION !== intval( get_option( 'dmbase_setup_version', 0 ) ) ) {
-		add_action( 'init', 'dmbase_do_setup', 1 );
+		add_action( 'plugins_loaded', 'dmbase_do_setup', 1 );
 	}
 }
 add_action( 'plugins_loaded', 'dmbase_maybe_trigger_setup', 999 );
