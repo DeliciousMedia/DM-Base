@@ -52,6 +52,18 @@ function dmbase_setup_developer_role() {
 add_action( 'dmbase_setup', 'dmbase_setup_developer_role', 10 );
 
 /**
+ * Remove the dm_developer role from the UI as it is only used internally.
+ *
+ * @param  array $roles User roles.
+ * @return array
+ */
+function dmbase_hide_developer_role( $roles ) {
+		unset( $roles['dm_developer'] );
+		return $roles;
+}
+add_filter( 'editable_roles', 'dmbase_hide_developer_role', 10, 1 );
+
+/**
  * If the SpinupWP plugin is active, it is likely it will have been activated by DM_Base_Enable_Plugins
  * and the activation hook won't have run; so we'll run it here.
  *
