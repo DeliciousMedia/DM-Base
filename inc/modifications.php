@@ -229,3 +229,13 @@ if ( true === DM_PREVENT_USER_ENUM && ! is_admin() && isset( $_SERVER['QUERY_STR
 	}
 	add_filter( 'redirect_canonical', 'dmbase_precent_user_enum', 10, 2 );
 }
+
+/**
+ * Return a 403 status code when logins failed; let's us pick this up in Fail2Ban where available.
+ *
+ * @return void
+ */
+function dmbase_return_http_403() {
+	status_header( 403 );
+}
+add_action( 'wp_login_failed', 'dmbase_return_http_403' );
