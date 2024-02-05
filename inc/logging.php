@@ -13,7 +13,6 @@
  * @param  mixed  $message        message text, accepts string, array or object.
  * @param  string $category       category of log entry; determines which file is written to.
  */
-
 function dm_log( $message, $category = 'general' ) {
 
 	$timestamp = new DateTime();

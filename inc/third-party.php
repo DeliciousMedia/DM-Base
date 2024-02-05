@@ -13,7 +13,7 @@ add_filter( 'gform_disable_view_counter', '__return_true' );
  */
 add_filter(
 	'wpseo_metabox_prio',
-	function() {
+	function () {
 		return 'low';
 	}
 );
@@ -31,13 +31,12 @@ if ( defined( 'DM_REMOVE_YOAST_ADS' ) && true === DM_REMOVE_YOAST_ADS ) {
 	// Sadly Yoast won't provide a clean way of doing this, so....
 	add_action(
 		'init',
-		function() {
+		function () {
 
 			dm_remove_filters_for_anonymous_class( 'wp_trash_post', 'WPSEO_Slug_Change_Watcher', 'detect_post_trash', 10 );
 			dm_remove_filters_for_anonymous_class( 'before_delete_post', 'WPSEO_Slug_Change_Watcher', 'detect_post_delete', 10 );
 			dm_remove_filters_for_anonymous_class( 'delete_term_taxonomy', 'WPSEO_Slug_Change_Watcher', 'detect_term_delete', 10 );
 			dm_remove_filters_for_anonymous_class( 'admin_enqueue_scripts', 'WPSEO_Slug_Change_Watcher', 'enqueue_assets', 10 );
-
 		}
 	);
 
@@ -54,7 +53,7 @@ if ( defined( 'DM_REMOVE_YOAST_ADS' ) && true === DM_REMOVE_YOAST_ADS ) {
 if ( defined( 'DM_GFORM_DELETE' ) && true === DM_GFORM_DELETE ) {
 	add_action(
 		'gform_after_submission',
-		function( $entry, $form ) {
+		function ( $entry, $form ) {
 			GFAPI::delete_entry( $entry['id'] );
 		},
 		99,
@@ -82,7 +81,7 @@ if ( defined( 'DM_HIDE_ACF_UI' ) && true === DM_HIDE_ACF_UI ) {
 	// On other environments, only show for users with the dm_developer role.
 	add_filter(
 		'acf/settings/show_admin',
-		function() {
+		function () {
 			return dm_is_developer();
 		}
 	);
@@ -91,11 +90,10 @@ if ( defined( 'DM_HIDE_ACF_UI' ) && true === DM_HIDE_ACF_UI ) {
 // Don't show SpinupWP notices; we already pickup these things up and they will confuse clients.
 add_action(
 	'init',
-	function() {
+	function () {
 		dm_remove_filters_for_anonymous_class( 'admin_notices', 'SpinupWp\AdminNotices', 'show_notices', 10 );
 		dm_remove_filters_for_anonymous_class( 'network_admin_notices', 'SpinupWp\AdminNotices', 'show_notices', 10 );
 		dm_remove_filters_for_anonymous_class( 'admin_enqueue_scripts', 'SpinupWp\AdminNotices', 'enqueue_scripts', 10 );
 		dm_remove_filters_for_anonymous_class( 'wp_ajax_spinupwp_dismiss_notice', 'SpinupWp\AdminNotices', 'ajax_dismiss_notice', 10 );
 	}
 );
-

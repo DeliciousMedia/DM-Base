@@ -34,6 +34,7 @@ function register_dm_flags_taxonomy() {
 		'items_list'                 => __( 'Flags list', 'dm-base' ),
 		'items_list_navigation'      => __( 'Flags list navigation', 'dm-base' ),
 	];
+
 	$args = [
 		'labels'             => $labels,
 		'hierarchical'       => true,
@@ -47,7 +48,6 @@ function register_dm_flags_taxonomy() {
 		'rewrite'            => false,
 	];
 	register_taxonomy( 'dm_flags', [ 'post' ], $args );
-
 }
 add_action( 'init', 'register_dm_flags_taxonomy', 0 );
 
@@ -137,7 +137,6 @@ function dm_maybe_populate_flags_taxonomy() {
 	update_option( 'dm_flags_checksum', $terms_sum );
 	dm_log( 'Updated dm_flags taxonomy terms.' );
 	return true;
-
 }
 add_action( 'init', 'dm_maybe_populate_flags_taxonomy' );
 
@@ -188,7 +187,6 @@ function dm_set_flag( $post_id, $flag_type, $flag_value ) {
 	do_action( 'dm_flag_set', $post_id, $flag_type, $flag_value );
 	do_action( 'dm_flag_set_' . $flag_type, $post_id, $flag_value );
 	return true;
-
 }
 
 /**
@@ -336,4 +334,3 @@ function dm_flags_maybe_prevent_term_deletion( $required_cap, $cap, $user_id, $a
 	return $required_cap;
 }
 add_filter( 'map_meta_cap', 'dm_flags_maybe_prevent_term_deletion', 10, 4 );
-

@@ -239,3 +239,14 @@ function dmbase_return_http_403() {
 	status_header( 403 );
 }
 add_action( 'wp_login_failed', 'dmbase_return_http_403' );
+
+/**
+ * Sets the login header URL to the current site.
+ * Defaults to wordpress.org for some reason.
+ *
+ * @return string
+ */
+function dmbase_login_header_url(): string {
+	return home_url( '/' );
+}
+add_filter( 'login_headerurl', 'dmbase_login_header_url' );

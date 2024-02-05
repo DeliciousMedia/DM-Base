@@ -21,7 +21,7 @@ defined( 'DMACFS_DATA_DIR' ) || define( 'DMACFS_DATA_DIR', $dmacfs_theme_dir . '
  */
 function dmbase_acfsync_directory_setup() {
 	if ( ! file_exists( DMACFS_DATA_DIR ) ) {
-		mkdir( DMACFS_DATA_DIR, 0777, true );
+		mkdir( DMACFS_DATA_DIR, 0740, true );
 	}
 }
 add_action( 'dmbase_setup', 'dmbase_acfsync_directory_setup' );
@@ -61,7 +61,6 @@ function dmacfs_json_load_point( $paths ) {
 	}
 
 	return $paths;
-
 }
 add_filter( 'acf/settings/load_json', 'dmacfs_json_load_point' );
 
@@ -178,7 +177,6 @@ function dmacfs_trigger_update() {
 	}
 
 	return dmacfs_maybe_update_acf_fields();
-
 }
 add_action( 'acf/init', 'dmacfs_trigger_update' );
 
