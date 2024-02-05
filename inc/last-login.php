@@ -22,7 +22,6 @@ function dmbase_ll_record_login_time( $login, $user ) {
 	}
 
 	update_user_meta( $user->ID, '_dm_logins_last', time() );
-
 }
 add_action( 'wp_login', 'dmbase_ll_record_login_time', 1, 2 );
 
@@ -90,7 +89,6 @@ function dmbase_ll_display_column_data( $value, $column_name, $user_id ) {
 		}
 		return $content;
 	}
-
 }
 
 add_action( 'manage_users_custom_column', 'dmbase_ll_display_column_data', 10, 3 );

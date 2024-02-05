@@ -1,0 +1,14 @@
+{
+    "name": "deliciousmedia/dm-base",
+    "description": "Base functionality, helpers and modifications to WordPress for Delicious Media projects.",
+    "type": "wordpress-plugin",
+    "homepage": "https://github.com/DeliciousMedia/DM-Base",
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Delicious Media Limited"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
