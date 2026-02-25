@@ -12,6 +12,7 @@ Base functionality, helpers and modifications to WordPress for Delicious Media p
 - Modifies plugin install screen to show our recommended plugins first (Toggle with `DM_MODIFY_PLUGINS_SCREEN`; default true).
 - Removes XMLRPC functionality; X-Pingback headers; tidies up wp_head();
 - Prevents enumeration of usernames via ?author=n query strings, helpful for tickybox PCI audits (toggled with `DM_PREVENT_USER_ENUM`; defaults true).
+- Enables the use of real GUIDS (toggled with `DM_USE_REAL_GUIDS`).
 
 ### Additional functionality
 

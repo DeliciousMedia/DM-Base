@@ -250,3 +250,37 @@ function dmbase_login_header_url(): string {
 	return home_url( '/' );
 }
 add_filter( 'login_headerurl', 'dmbase_login_header_url' );
+
+/**
+ * Disable periodic admin email check.
+ */
+add_filter( 'admin_email_check_interval', '__return_zero' );
+
+/**
+ * Add urn: to the allowed protocols as the GUID is passed through esc_url_raw.
+ *
+ * @param array $protocols Protocols array.
+ * @return array
+ */
+function dmbase_allow_urn_protocol( array $protocols ): array {
+	$protocols[] = 'urn';
+	return $protocols;
+}
+
+/**
+ * Add our UUID to new posts.
+ *
+ * @param array $data Post data.
+ * @return array
+ */
+function dmbase_add_uuid_to_new_posts( array $data ): array {
+	if ( empty( $data['guid'] ) ) {
+			$data['guid'] = wp_slash( sprintf( 'urn:uuid:%s', wp_generate_uuid4() ) );
+	}
+
+		return $data;
+}
+if ( defined( 'DM_USE_REAL_GUIDS' ) && true === DM_USE_REAL_GUIDS ) {
+	add_filter( 'kses_allowed_protocols', 'dmbase_allow_urn_protocol' );
+	add_filter( 'wp_insert_post_data', 'dmbase_add_uuid_to_new_posts' );
+}
