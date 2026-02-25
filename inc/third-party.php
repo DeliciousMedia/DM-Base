@@ -87,7 +87,9 @@ if ( defined( 'DM_HIDE_ACF_UI' ) && true === DM_HIDE_ACF_UI ) {
 	);
 }
 
-// Don't show SpinupWP notices; we already pickup these things up and they will confuse clients.
+/**
+ * Don't show SpinupWP notices; we already pickup these things up and they will confuse clients.
+ */
 add_action(
 	'init',
 	function () {
@@ -97,3 +99,15 @@ add_action(
 		dm_remove_filters_for_anonymous_class( 'wp_ajax_spinupwp_dismiss_notice', 'SpinupWp\AdminNotices', 'ajax_dismiss_notice', 10 );
 	}
 );
+
+/**
+ * Don't show Stream's HTML comment on the frontend of the site.
+ */
+add_filter( 'wp_stream_frontend_indicator', '__return_false' );
+
+/**
+ * Hide ACF's post/taxonomy registration functionality as we don't use it
+ */
+if ( defined( 'DM_HIDE_ACF_CPT_REGISTRATION' ) && true === DM_HIDE_ACF_CPT_REGISTRATION ) {
+	add_filter( 'acf/settings/enable_post_types', '__return_false' );
+}
