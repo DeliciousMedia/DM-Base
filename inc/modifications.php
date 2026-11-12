@@ -5,6 +5,9 @@
  * @package dm-base
  */
 
+// Disables the 'random' functionality in 7.2 because nobody needs it.
+add_filter( 'wp_enable_random_content_redirect', '__return_false' );
+
 /**
  * Filter to prevent the REST API being available to unauthenticated users.
  * Individual namespaces can be white-listed by filtering dm_allowed_anonymous_restnamespaces.
