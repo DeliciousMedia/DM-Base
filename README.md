@@ -21,7 +21,8 @@ Base functionality, helpers and modifications to WordPress for Delicious Media p
 - Adds an environment indicator to the admin bar.
 - Adds dm_developer role.
 - Ability to force enable/disable plugins by environment (or other arbitrary rules).
-- Ability to sync ACF fields between environments.
+- Ability to sync ACF fields between environments..
+- Disables the random functionality introduced in WP 7.2.
 
 ## Installation
 
